@@ -4,6 +4,7 @@ import './Form.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserToken } from '../../redux/features/UserToken';
+import { setUser } from '../../redux/features/User';
 
 function Register() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function Register() {
       setEmpty(true);
       if(err) setErr(false);
       return;
-  }
+    }
 
     const user = {
       firstName: fname,
@@ -39,6 +40,7 @@ function Register() {
       .then(res => {
         console.log("res: ", res.data);
         dispatch(setUserToken({userToken: res.data.token}));
+        dispatch(setUser({username: res.data.userName}));
       })
     }catch(e) {
       setErr(true);

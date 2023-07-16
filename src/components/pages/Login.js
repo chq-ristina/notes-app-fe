@@ -4,6 +4,7 @@ import './Form.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserToken } from '../../redux/features/UserToken';
+import { setUser } from '../../redux/features/User';
 
 function Login() {
     const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function Login() {
             .then(res => {
                 console.log("response:", res.data);
                 dispatch(setUserToken({userToken: res.data.token}));
+                dispatch(setUser({username: res.data.userName}))
                 
             })
 
