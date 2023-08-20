@@ -8,6 +8,13 @@ function Home() {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
   const [activeTab, setActiveTab] = useState("My Notes");
+  const [noteUsername, setNoteUsername] = useState();
+
+  const getActiveNote = () => {
+    return notes.find((note) => note.id === activeNote);
+  }
+  const [updatedTitle, setUpdatedTitle] = useState(null);
+  const [updatedText, setUpdatedText] = useState(null);
 
   const username = useSelector((state) => state.user.value.username);
   const token = useSelector((state) => state.userToken.value.userToken.userToken);
@@ -20,6 +27,10 @@ function Home() {
 
   console.log("token: ", token);
   console.log("username: ", username)
+
+  console.log("active note:", activeNote);
+
+  console.log("updated title:", updatedTitle, "updated text:", updatedText);
 
 
 
@@ -48,7 +59,7 @@ function Home() {
         "http://localhost:8080/api/v1/shared/get-shared",
         {
           headers: config.headers,
-          params: 
+          params:
             { query: user_id }
         })
         .then(res => {
@@ -62,27 +73,27 @@ function Home() {
   }
 
   const getUsername = async (id) => {
-    const request = {
-      id: id
-    }
-
-    try{
+    try {
       axios.get(
         "http://localhost:8080/api/v1/user/get-username",
         {
           headers: config.headers,
-          params: 
-            { id: id}
+          params:
+            { id: id }
         }
       )
-      .then(res => {
-        return res.data.username;
-      })
-    } catch(e){
+        .then(res => {
+          setNoteUsername(res.data.username);
+          return res.data.username;
+        })
+    } catch (e) {
       console.log(e);
     }
   }
 
+  // const addUsername = async () => {
+  //   notes.map(note => ({...note, username: noteUsername}))
+  // }
 
   useEffect(() => {
     if (logged_in) {
@@ -96,6 +107,12 @@ function Home() {
     }
 
   }, [activeTab])
+
+  useEffect(() => {
+    let note = getActiveNote();
+    setUpdatedTitle(note?.title)
+    setUpdatedText(note?.text)
+  }, [activeNote])
 
   // const config = {
   //   headers: { Authorization: `Bearer ${token}` }
@@ -122,48 +139,83 @@ function Home() {
     }
   };
 
-  const onUpdateNote = async (updatedNote, key) => {
-    //need to figure out how to conditionally set up the object ... might have to do an ugly if else type of thing
-    //let updatedKey = "updatedT" + key.substring(1);
+  const onUpdateNote = async (updatedNote) => {
     const updatedNotesArray = notes.map(async (note) => {
-      if (note.id === updatedNote.id) {
-        // if(key === "title"){
-        //   const update = {
-        //     id: updatedNote.id,
-        //     updateTitle: updatedNote.title
-        //   }
-        // }
-        // else if(key === "text"){
-        //   const update = {
-        //     id: updatedNote.id,
-        //     updateText: updatedNote.text
-        //   } 
+      let same = updatedTitle === note.title && updatedText === note.text
+      if (note.id === updatedNote.id && !same) {
+        console.log("UPDATING!!!");
+        const update = {
+          id: updatedNote.id,
+          updateTitle: updatedTitle,
+          updateText: updatedText
+        }
 
-        // }
-        // console.log("updated note: ", updatedNote);
-        // const update = {
-        //   id: updatedNote.id,
-        //   updateTitle: updatedNote?.title,
-        //   updateText: updatedNote?.text
-        // }
-        // try{
-        //   await axios.patch(
-        //     "http://localhost:8080/api/v1/note/update",
-        //     update,
-        //     config
-        //   ).then( res => {
-        //     console.log("response: ", res.data);
-        //     return updatedNote;
-        //   })
-        // }catch (e){
-        //   console.log(e);
-        // }
-        return updatedNote;
+        try {
+          await axios.put(
+            "http://localhost:8080/api/v1/note/update",
+            update,
+            config
+          ).then(res => {
+            console.log("response: ", res.data);
+            getNotes();
+            // console.log("updatedNote:", updatedNote);
+            // return updatedNote;
+          })
+        } catch (e) {
+          console.log(e);
+        }
       }
-      return note;
+      console.log("note in update:", note)
+      // return note;
     });
 
-    setNotes(updatedNotesArray);
+    // console.log("updatedNotesArray:", updatedNotesArray);
+    // getNotes();
+
+    // setNotes(updatedNotesArray);
+
+
+    //need to figure out how to conditionally set up the object ... might have to do an ugly if else type of thing
+    //let updatedKey = "updatedT" + key.substring(1);
+    //const updatedNotesArray = notes.map(async (note) => {
+    //if (note.id === updatedNote.id) {
+    // if(key === "title"){
+    //   const update = {
+    //     id: updatedNote.id,
+    //     updateTitle: updatedNote.title
+    //   }
+    // }
+    // else if(key === "text"){
+    //   const update = {
+    //     id: updatedNote.id,
+    //     updateText: updatedNote.text
+    //   } 
+
+    // }
+    // console.log("updated note: ", updatedNote);
+    // const update = {
+    //   id: updatedNote.id,
+    //   updateTitle: updatedNote?.title,
+    //   updateText: updatedNote?.text
+    // }
+    // try{
+    //   await axios.patch(
+    //     "http://localhost:8080/api/v1/note/update",
+    //     update,
+    //     config
+    //   ).then( res => {
+    //     console.log("response: ", res.data);
+    //     return updatedNote;
+    //   })
+    // }catch (e){
+    //   console.log(e);
+    // }
+    //return updatedNote;
+    //}
+    // return note;
+    //});
+
+    //setNotes(updatedNotesArray);
   };
 
   const onDeleteNote = async (idToDelete) => {
@@ -193,13 +245,10 @@ function Home() {
 
   }
 
-  const getActiveNote = () => {
-    return notes.find((note) => note.id === activeNote);
-  }
-
   return (
     <div className='Home'>
       <Sidebar
+        config={config}
         notes={notes}
         onAddNote={onAddNote}
         onDeleteNote={onDeleteNote}
@@ -208,10 +257,15 @@ function Home() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         getUsername={getUsername}
+        noteUsername={noteUsername}
       />
       <Main
         activeNote={getActiveNote()}
         onUpdateNote={onUpdateNote}
+        updatedTitle={updatedTitle}
+        setUpdatedTitle={setUpdatedTitle}
+        updatedText={updatedText}
+        setUpdatedText={setUpdatedText}
       />
     </div>
   )

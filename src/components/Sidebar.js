@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios';
 
 function Sidebar({
+    config,
     notes,
     onAddNote,
     onDeleteNote,
@@ -9,9 +11,29 @@ function Sidebar({
     setActiveNote,
     activeTab,
     setActiveTab,
-    getUsername }) {
+    getUsername,
+    noteUsername }) {
 
     const username = useSelector((state) => state.user.value.username);
+    const [name, setName] =  useState();
+
+    // const getUsername = async (id) => {
+    //     try{
+    //       axios.get(
+    //         "http://localhost:8080/api/v1/user/get-username",
+    //         {
+    //           headers: config.headers,
+    //           params: 
+    //             { id: id}
+    //         }
+    //       )
+    //       .then(res => {
+    //         setName(res.data.username);
+    //       })
+    //     } catch(e){
+    //       console.log(e);
+    //     }
+    //   }
 
     return (
         <div className='app-sidebar'>
@@ -35,7 +57,7 @@ function Sidebar({
             <div className='app-sidebar-notes'>
                 {notes?.map((note) => (
                     <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} onClick={() => setActiveNote(note.id)}>
-                        {console.log(note)}
+                        {console.log("note", note)}
                         <div className='sidebar-note-title'>
                             <strong>{note.title}</strong>
                             <button onClick={() => onDeleteNote(note.id)}>Delete</button>
@@ -48,7 +70,7 @@ function Sidebar({
                             })}
                         </small>
                         <small className='note-meta'>
-                            {console.log("getusername:", getUsername(note.user_id))}
+                            {/* {console.log("getusername:", getUsername(note.user_id), name)} */}
                             By {username}
                         </small>
 

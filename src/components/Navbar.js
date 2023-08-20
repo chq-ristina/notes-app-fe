@@ -32,7 +32,7 @@ export default function Appbar() {
   const handleLogout = () => {
     dispatch(removeUser());
     dispatch(removeUserToken());
-    history("/");
+    history("/login");
   }
 
   return (
@@ -54,15 +54,19 @@ export default function Appbar() {
                 E-scribe
               </Link>
             </Typography>
-            <IconButton
-              size="large"
-              aria-label="show new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {logged_in &&
+              <IconButton
+                size="large"
+                aria-label="show new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={1} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+
+            }
+
             {logged_in &&
               <div>
                 <span> Hi {username} </span>
