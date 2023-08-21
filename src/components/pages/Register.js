@@ -42,7 +42,7 @@ function Register() {
         console.log("res: ", res.data);
         dispatch(setUserToken({userToken: res.data.token}));
         dispatch(setUser({username: res.data.userName, user_id: res.data.userId}));
-        history("/");
+        history("/home");
       })
     }catch(e) {
       setErr(true);

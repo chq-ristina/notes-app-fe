@@ -3,12 +3,15 @@ import Sidebar from '../Sidebar'
 import Main from '../Main'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'
 
 function Home() {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
   const [activeTab, setActiveTab] = useState("My Notes");
   const [noteUsername, setNoteUsername] = useState();
+
+  const history = useNavigate();
 
   const getActiveNote = () => {
     return notes.find((note) => note.id === activeNote);
@@ -245,6 +248,10 @@ function Home() {
 
   }
 
+  if(!logged_in){
+    return(history("/"))
+  }
+  
   return (
     <div className='Home'>
       <Sidebar

@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser, setUser } from '../redux/features/User';
 import { removeUserToken } from '../redux/features/UserToken';
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function Appbar() {
   const logged_in = useSelector((state) => state.user.value.logged_in);
@@ -32,7 +33,7 @@ export default function Appbar() {
   const handleLogout = () => {
     dispatch(removeUser());
     dispatch(removeUserToken());
-    history("/login");
+    history("/");
   }
 
   return (
@@ -54,6 +55,17 @@ export default function Appbar() {
                 E-scribe
               </Link>
             </Typography>
+            {logged_in &&
+              <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home'
+              >
+                <HomeIcon
+                size="large"
+                aria-label="home button"
+                color="inherit"/>
+              </Link>
+            }
             {logged_in &&
               <IconButton
                 size="large"

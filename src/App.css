@@ -201,3 +201,29 @@ textarea {
   font-size: 1rem;
   line-height: 2rem;
 }
+
+.Landing{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.Landing .buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 20%;
+}
+
+.Landing button{
+  background-color: #57153a;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
