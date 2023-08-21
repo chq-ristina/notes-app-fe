@@ -248,10 +248,6 @@ function Home() {
 
   }
 
-  if(!logged_in){
-    return(history("/"))
-  }
-  
   return (
     <div className='Home'>
       <Sidebar
