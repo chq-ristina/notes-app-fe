@@ -16,6 +16,7 @@ function Sidebar({
 
     const username = useSelector((state) => state.user.value.username);
     const [name, setName] =  useState();
+    let reversedNotes = [...notes].reverse();
 
     // const getUsername = async (id) => {
     //     try{
@@ -55,7 +56,7 @@ function Sidebar({
                 <button onClick={onAddNote}>Add</button>
             </div>
             <div className='app-sidebar-notes'>
-                {notes?.map((note) => (
+                {reversedNotes?.map((note) => (
                     <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} onClick={() => setActiveNote(note.id)}>
                         {console.log("note", note)}
                         <div className='sidebar-note-title'>

@@ -92,7 +92,7 @@ body,
 }
 
 .app-sidebar-notes {
-  height: calc(100vh - 78px);
+  height: calc(100vh - 200px);
   overflow-y: scroll;
 }
 
@@ -127,6 +127,10 @@ body,
 .app-sidebar-note.active small {
   background: #08c;
   color: white;
+}
+
+.app-sidebar-header-column{
+  cursor: pointer;
 }
 
 /* NOTE EDITOR/PREVIEW (MAIN) STYLES */

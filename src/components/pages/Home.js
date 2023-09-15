@@ -109,7 +109,7 @@ function Home() {
       }
     }
 
-  }, [activeTab])
+  }, [activeTab, notes])
 
   useEffect(() => {
     let note = getActiveNote();
