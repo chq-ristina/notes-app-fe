@@ -10,6 +10,7 @@ function Home() {
   const [activeNote, setActiveNote] = useState(false);
   const [activeTab, setActiveTab] = useState("My Notes");
   const [noteUsername, setNoteUsername] = useState();
+  const [updateSideBar, setUpdateSideBar] = useState(false); //for useEffect to update sidebar notes
 
   const history = useNavigate();
 
@@ -28,12 +29,12 @@ function Home() {
     headers: { Authorization: `Bearer ${token}` }
   };
 
-  console.log("token: ", token);
-  console.log("username: ", username)
+  // console.log("token: ", token);
+  // console.log("username: ", username)
 
-  console.log("active note:", activeNote);
+  // console.log("active note:", activeNote);
 
-  console.log("updated title:", updatedTitle, "updated text:", updatedText);
+  // console.log("updated title:", updatedTitle, "updated text:", updatedText);
 
 
 
@@ -99,17 +100,13 @@ function Home() {
   // }
 
   useEffect(() => {
-    if (logged_in) {
-      if (activeTab === "My Notes") {
-        getNotes();
-      }
-
-      if (activeTab === "Shared with me") {
-        getSharedNotes();
-      }
+    if (activeTab === "My Notes"){
+      getNotes();
     }
-
-  }, [activeTab, notes])
+    if (activeTab === "Shared with me"){
+      getSharedNotes();
+    }
+  }, [activeTab, updateSideBar])
 
   useEffect(() => {
     let note = getActiveNote();
@@ -136,6 +133,7 @@ function Home() {
         .then(res => {
           console.log("response: ", res.data);
           setNotes([res.data, ...notes]);
+          setUpdateSideBar(!updateSideBar);
         })
     } catch (e) {
       console.log(e);
@@ -160,9 +158,9 @@ function Home() {
             config
           ).then(res => {
             console.log("response: ", res.data);
-            getNotes();
-            // console.log("updatedNote:", updatedNote);
-            // return updatedNote;
+            //getNotes();
+            window.alert("Updated note!");
+            setUpdateSideBar(!updateSideBar);
           })
         } catch (e) {
           console.log(e);
@@ -241,6 +239,7 @@ function Home() {
       ).then(res => {
         console.log("response: ", res.data);
         setNotes(notes.filter((note) => note.id !== idToDelete));
+        setUpdateSideBar(!updateSideBar);
       })
     } catch (e) {
       console.log(e);
