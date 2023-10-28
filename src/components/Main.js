@@ -48,16 +48,19 @@ function Main({
               value={updatedText}
               onChange={(e) => setUpdatedText(e.target.value)}
             />
-            <button onClick={update}>
-              Save
-            </button>
+            <div>
+              <button onClick={update}>
+                Save
+              </button>
+            </div>
+            
         </div>
-        <div className='app-main-note-preview'>
+        {/* <div className='app-main-note-preview'>
             <h1 className='preview-title'>{updatedTitle}</h1>
             <div className='markdown-preview'>
                 {updatedText}
             </div>
-        </div>
+        </div> */}
     </div>
   )
 }

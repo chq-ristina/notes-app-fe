@@ -45,7 +45,7 @@ body,
 }
 
 .Home button:hover {
-  color: #04c;
+  color: rgb(14, 14, 52);
 }
 
 .Home {
@@ -58,6 +58,7 @@ body,
   width: 30%;
   height: 100vh;
   border-right: 1px solid #ddd;
+  background: #edede5;
 }
 
 .app-sidebar-header {
@@ -125,8 +126,8 @@ body,
 
 .app-sidebar-note.active,
 .app-sidebar-note.active small {
-  background: #08c;
-  color: white;
+  background: #914972;
+  color:rgb(248, 243, 237);
 }
 
 .app-sidebar-header-column{
@@ -140,10 +141,15 @@ body,
   height: 100vh;
 }
 
-.app-main-note-edit,
-.app-main-note-preview {
-  height: 50vh;
+/* .app-main-note-edit{
+  height: 60vh
 }
+/*.app-main-note-edit,*/
+/* .app-main-note-preview {
+  height: 40vh;
+  overflow-y: auto;
+  padding-bottom: 50px;
+} */ */
 
 .no-active-note {
   width: 70%;
@@ -161,20 +167,28 @@ body,
 
 .app-main-note-edit input,
 textarea {
+  background: transparent;
   display: block;
-  border: 1px solid #ddd;
+  border: none;
+  /*border: 1px solid #ddd;*/
   margin-bottom: 20px;
   width: 100%;
-  height: calc(50vh - 130px);
+  /*height: calc(50vh - 130px);*/
   padding: 10px;
   resize: none;
   font-size: inherit;
   font-family: inherit;
+  outline: none;
 }
 
 .app-main-note-edit input {
   height: 50px;
   font-size: 2rem;
+  font-weight: 500;
+}
+
+.app-main-note-edit textarea {
+  height: 60vh;
 }
 
 .app-main-note-edit button {
@@ -186,6 +200,11 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.app-main-note-edit button:hover{
+  color: white;
+  background-color: #914972;
 }
 
 /* Preview */
