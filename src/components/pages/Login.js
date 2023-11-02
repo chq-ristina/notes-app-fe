@@ -7,7 +7,8 @@ import { setUserToken } from '../../redux/features/UserToken';
 import { setUser } from '../../redux/features/User';
 
 function Login() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const history = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,7 +37,8 @@ function Login() {
             .then(res => {
                 console.log("response:", res.data);
                 dispatch(setUserToken({userToken: res.data.token}));
-                dispatch(setUser({username: res.data.userName}))
+                dispatch(setUser({username: res.data.userName, user_id: res.data.userId}))
+                history("/home");
                 
             })
 
