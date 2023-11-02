@@ -4,6 +4,7 @@ import Main from '../Main'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
+import classNames from 'classnames'
 
 function Home() {
   const [notes, setNotes] = useState([]);
@@ -13,6 +14,8 @@ function Home() {
   const [updateSideBar, setUpdateSideBar] = useState(false); //for useEffect to update sidebar notes
 
   const history = useNavigate();
+
+  let openModal = false;
 
   const getActiveNote = () => {
     return notes.find((note) => note.id === activeNote);
@@ -36,7 +39,18 @@ function Home() {
 
   // console.log("updated title:", updatedTitle, "updated text:", updatedText);
 
+  const modal = document.getElementById('modal');
+  const closeModal = document.querySelector("#closeModal");
+  const openDialog = () => {
+    modal.showModal();
+    openModal = true;
 
+    closeModal.addEventListener("click", () => {
+      console.log("attempting to close modal....");
+      modal.close()
+      openModal = false;
+    });
+  }
 
   const getNotes = async () => {
     try {
@@ -159,7 +173,8 @@ function Home() {
           ).then(res => {
             console.log("response: ", res.data);
             //getNotes();
-            window.alert("Updated note!");
+            //window.alert("Updated note!");
+            openDialog();
             setUpdateSideBar(!updateSideBar);
           })
         } catch (e) {
@@ -248,7 +263,7 @@ function Home() {
   }
 
   return (
-    <div className='Home'>
+    <div className={openModal ? 'Home modalBackground' : 'Home'}>
       <Sidebar
         config={config}
         notes={notes}

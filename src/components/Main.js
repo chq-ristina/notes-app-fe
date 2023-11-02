@@ -41,6 +41,10 @@ function Main({
               onChange={(e) => setUpdatedTitle(e.target.value)} 
               autoFocus 
             />
+            <dialog id="modal" class="modal">
+              <p>Note Updated!</p>
+              <button id="closeModal" class="modal-close-btn">Close</button>
+            </dialog>
             <textarea 
               id='body' 
               placeholder='Write your note here...' 
@@ -53,7 +57,6 @@ function Main({
                 Save
               </button>
             </div>
-            
         </div>
         {/* <div className='app-main-note-preview'>
             <h1 className='preview-title'>{updatedTitle}</h1>
