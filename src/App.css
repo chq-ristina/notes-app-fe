@@ -172,8 +172,7 @@ body,
   overflow-y: auto;
   padding-bottom: 50px;
 } */ */
-
-.no-active-note {
+#root > div > div.Home > div.no-active-note{
   width: 70%;
   height: 100vh;
   line-height: 100vh;

@@ -9,12 +9,6 @@ function Main({
   setUpdatedText}) 
   {
 
-  /*
-  TODO: For updating notes...
-  since it's not connected to the db, can probably just use states to save the current/edited state of the active note
-  then... when a save button is clicked, actually send the update to the db and thus updating the sidebar
-  */
-
   const update = (e) => {
     e.preventDefault();
 
