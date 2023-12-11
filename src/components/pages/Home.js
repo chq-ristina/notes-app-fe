@@ -12,16 +12,22 @@ function Home() {
   const [activeTab, setActiveTab] = useState("My Notes");
   const [noteUsername, setNoteUsername] = useState();
   const [updateSideBar, setUpdateSideBar] = useState(false); //for useEffect to update sidebar notes
+  const [shared, setShared] = useState([]);
+  const [openSharedModal, setOpenSharedModal] = useState(false);
+  const [ableToShare, setAbleToShare] = useState(null)
+  const [shareError, setShareError] = useState(null)
 
   const history = useNavigate();
 
   let openModal = false;
+  //let openSharedModal = false;
 
   const getActiveNote = () => {
     return notes.find((note) => note.id === activeNote);
   }
   const [updatedTitle, setUpdatedTitle] = useState(null);
   const [updatedText, setUpdatedText] = useState(null);
+  const [searchInput, setSearchInput] = useState(null);
 
   const username = useSelector((state) => state.user.value.username);
   const token = useSelector((state) => state.userToken.value.userToken.userToken);
@@ -35,19 +41,25 @@ function Home() {
   // console.log("token: ", token);
   // console.log("username: ", username)
 
-  // console.log("active note:", activeNote);
+   console.log("active note:", activeNote);
+   console.log(typeof(activeNote));
 
   // console.log("updated title:", updatedTitle, "updated text:", updatedText);
 
-  const modal = document.getElementById('modal');
   const closeModal = document.querySelector("#closeModal");
-  const openDialog = () => {
-    modal.showModal();
+  const openDialog = (modal) => {
+    
+    modal[0].showModal();
+    
     openModal = true;
 
     closeModal.addEventListener("click", () => {
       console.log("attempting to close modal....");
-      modal.close()
+      if(openSharedModal){
+        console.log("closing shared modal");
+        setOpenSharedModal(false);
+      }
+      modal[0].close()
       openModal = false;
     });
   }
@@ -109,6 +121,26 @@ function Home() {
     }
   }
 
+  const getSharedWith = async(id) => {
+    console.log("Getting shared list!");
+    try{
+      axios.get(
+        "http://localhost:8080/api/v1/shared/get-shared-by-note-id",
+        {
+          headers: config.headers,
+          params: 
+            {id: id}
+        }
+      )
+        .then(res => {
+          console.log("sharedWith results: ", res.data);
+          setShared(res.data);
+        })
+    } catch (e){
+      console.log(e);
+    }
+  }
+
   // const addUsername = async () => {
   //   notes.map(note => ({...note, username: noteUsername}))
   // }
@@ -127,6 +159,16 @@ function Home() {
     setUpdatedTitle(note?.title)
     setUpdatedText(note?.text)
   }, [activeNote])
+
+  useEffect(() => {
+    console.log("in use effect for opensharedmodal");
+    if(openSharedModal && activeNote !== false){
+      const modal = document.getElementsByClassName('shared-modal')
+      openDialog(modal)
+      console.log("going to get shared with")
+      getSharedWith(activeNote)
+    }
+  }, [openSharedModal])
 
   // const config = {
   //   headers: { Authorization: `Bearer ${token}` }
@@ -174,7 +216,8 @@ function Home() {
             console.log("response: ", res.data);
             //getNotes();
             //window.alert("Updated note!");
-            openDialog();
+            const modal = document.getElementsByClassName('update-modal');
+            openDialog(modal);
             setUpdateSideBar(!updateSideBar);
           })
         } catch (e) {
@@ -184,54 +227,35 @@ function Home() {
       console.log("note in update:", note)
       // return note;
     });
+  };
 
-    // console.log("updatedNotesArray:", updatedNotesArray);
-    // getNotes();
+  const onShareNote = async (sharedNote, targetUser) => {
+    const sharedRequest = {
+      noteId: sharedNote.id,
+      sourceUsername: username,
+      targetUsername: targetUser
+    }
 
-    // setNotes(updatedNotesArray);
+    try{
+      await axios.post(
+        "http://localhost:8080/api/v1/shared/add",
+        sharedRequest,
+        config
+      ).then( res => {
+        console.log("response: ", res.data);
+        let sharedResponse = res.data
 
-
-    //need to figure out how to conditionally set up the object ... might have to do an ugly if else type of thing
-    //let updatedKey = "updatedT" + key.substring(1);
-    //const updatedNotesArray = notes.map(async (note) => {
-    //if (note.id === updatedNote.id) {
-    // if(key === "title"){
-    //   const update = {
-    //     id: updatedNote.id,
-    //     updateTitle: updatedNote.title
-    //   }
-    // }
-    // else if(key === "text"){
-    //   const update = {
-    //     id: updatedNote.id,
-    //     updateText: updatedNote.text
-    //   } 
-
-    // }
-    // console.log("updated note: ", updatedNote);
-    // const update = {
-    //   id: updatedNote.id,
-    //   updateTitle: updatedNote?.title,
-    //   updateText: updatedNote?.text
-    // }
-    // try{
-    //   await axios.patch(
-    //     "http://localhost:8080/api/v1/note/update",
-    //     update,
-    //     config
-    //   ).then( res => {
-    //     console.log("response: ", res.data);
-    //     return updatedNote;
-    //   })
-    // }catch (e){
-    //   console.log(e);
-    // }
-    //return updatedNote;
-    //}
-    // return note;
-    //});
-
-    //setNotes(updatedNotesArray);
+        if(sharedResponse?.error){
+          setShareError(sharedResponse.errorMessage);
+        }else{
+          setAbleToShare(true);
+        }
+      })
+    }
+    catch(e) {
+      console.log(e.config);
+      setShareError("An error occurred")
+    }
   };
 
   const onDeleteNote = async (idToDelete) => {
@@ -283,6 +307,17 @@ function Home() {
         setUpdatedTitle={setUpdatedTitle}
         updatedText={updatedText}
         setUpdatedText={setUpdatedText}
+        shared={shared}
+        setShared={setShared}
+        openSharedModal={openSharedModal}
+        setOpenSharedModal={setOpenSharedModal}
+        onShareNote={onShareNote}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        ableToShare={ableToShare}
+        setAbleToShare={setAbleToShare}
+        shareError={shareError}
+        setShareError={setShareError}
       />
     </div>
   )

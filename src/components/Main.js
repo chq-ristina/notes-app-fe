@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import SearchBar from './SearchBar';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
+import ShareModal from './ShareModal';
 
 function Main({
   activeNote, 
@@ -6,7 +9,18 @@ function Main({
   updatedTitle, 
   setUpdatedTitle, 
   updatedText, 
-  setUpdatedText}) 
+  setUpdatedText,
+  shared,
+  setShared,
+  openSharedModal,
+  setOpenSharedModal,
+  onShareNote,
+  searchInput,
+  setSearchInput,
+  ableToShare,
+  setAbleToShare,
+  shareError,
+  setShareError}) 
   {
 
   const update = (e) => {
@@ -22,6 +36,11 @@ function Main({
     }, key);
   };
 
+  const onShareClick = () => {
+    console.log("open shared modal");
+    setOpenSharedModal(true);
+  }
+
   if (!activeNote) return <div className='no-active-note'>No note selected</div>
 
   return (
@@ -35,10 +54,24 @@ function Main({
               onChange={(e) => setUpdatedTitle(e.target.value)} 
               autoFocus 
             />
-            <dialog id="modal" class="modal">
+            <dialog id="modal" class="update-modal modal">
               <p>Note Updated!</p>
               <button id="closeModal" class="modal-close-btn">Close</button>
             </dialog>
+            <ShareModal
+              activeNote={activeNote}
+              shared={shared}
+              setShared={setShared}
+              openSharedModal={openSharedModal}
+              setOpenSharedModal={setOpenSharedModal}
+              onShareNote={onShareNote}
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+              ableToShare={ableToShare}
+              setAbleToShare={setAbleToShare}
+              shareError={shareError}
+              setShareError={setShareError}
+            />
             <textarea 
               id='body' 
               placeholder='Write your note here...' 
@@ -46,9 +79,12 @@ function Main({
               value={updatedText}
               onChange={(e) => setUpdatedText(e.target.value)}
             />
-            <div>
+            <div className='app-main-buttons'>
               <button onClick={update}>
                 Save
+              </button>
+              <button className='share-button' onClick={onShareClick}>
+                <PersonAddAltRoundedIcon/>
               </button>
             </div>
         </div>

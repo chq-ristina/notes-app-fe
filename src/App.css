@@ -160,12 +160,13 @@ body,
 
 .app-main {
   width: 70%;
-  height: 100vh;
+  height: 85vh;
+  padding: 10px;
 }
 
 /* .app-main-note-edit{
-  height: 60vh
-}
+  margin-bottom: 10px;
+}  */
 /*.app-main-note-edit,*/
 /* .app-main-note-preview {
   height: 40vh;
@@ -173,6 +174,8 @@ body,
   padding-bottom: 50px;
 } */ */
 #root > div > div.Home > div.no-active-note{
+}
+div.no-active-note {
   width: 70%;
   height: 100vh;
   line-height: 100vh;
@@ -192,7 +195,7 @@ textarea {
   display: block;
   border: none;
   /*border: 1px solid #ddd;*/
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   width: 100%;
   /*height: calc(50vh - 130px);*/
   padding: 10px;
@@ -219,13 +222,36 @@ textarea {
   font-weight: bold;
   font-size: 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  height: 7vh;
 }
 
 .app-main-note-edit button:hover{
   color: white;
   background-color: #914972;
+}
+
+.app-main-buttons{
+  /* border: 2px solid black; */
+  padding-bottom: 100px;
+  width: 50vw;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.app-main-buttons .share-button{
+  margin-left: 20px;
+  padding: 10px;
+  /* width: 5vw; */
+  /* border-radius: 5px; */
+}
+
+#root > div > div.Home > div.app-main > div > div:nth-child(3) > dialog > div > input{
+  height: 7vh;
+  font-size: 3vh;
+  /*border: solid 2px#57153a;*/
+  border-bottom: solid 2px#57153a;
 }
 
 /* Preview */
@@ -270,4 +296,19 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.share-modal dialog{
+ width: 45vw;
+ transform: translate(30%, -50%);
+}
+
+.search-bar-div{
+  display: flex;
+  justify-content: flex-start;
+  justify-items: center;
+}
+
+.search-bar-div button{
+  background-color: transparent;
+  color:#57153a;
 }
