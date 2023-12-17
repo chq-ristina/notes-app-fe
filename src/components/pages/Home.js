@@ -6,7 +6,15 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
-function Home() {
+function Home({
+  username,
+  token,
+  user_id,
+  pendingShared,
+  setPendngShared,
+  config,
+  getPendingShared
+}) {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
   const [activeTab, setActiveTab] = useState("My Notes");
@@ -29,14 +37,14 @@ function Home() {
   const [updatedText, setUpdatedText] = useState(null);
   const [searchInput, setSearchInput] = useState(null);
 
-  const username = useSelector((state) => state.user.value.username);
-  const token = useSelector((state) => state.userToken.value.userToken.userToken);
-  const user_id = useSelector((state) => state.user.value.user_id);
+  // const username = useSelector((state) => state.user.value.username);
+  // const token = useSelector((state) => state.userToken.value.userToken.userToken);
+  // const user_id = useSelector((state) => state.user.value.user_id);
   const logged_in = useSelector((state) => state.user.value.logged_in);
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
+  // const config = {
+  //   headers: { Authorization: `Bearer ${token}` }
+  // };
 
   // console.log("token: ", token);
   // console.log("username: ", username)
