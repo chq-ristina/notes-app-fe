@@ -71,16 +71,20 @@ export default function Appbar({
               </Link>
             }
             {logged_in &&
-              <IconButton
-                size="large"
-                aria-label="show new notifications"
-                color="inherit"
+              <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/share-request'
               >
-                <Badge badgeContent={pendingShared.length} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-
+                <IconButton
+                  size="large"
+                  aria-label="show new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={pendingShared.length} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
             }
 
             {logged_in &&

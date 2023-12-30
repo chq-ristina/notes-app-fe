@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ProtectedRoute from './components/ProtectedRoute';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ShareRequest from './components/pages/ShareRequest';
 
 function App() {
   const logged_in = useSelector((state) => state.user.value.logged_in);
@@ -71,6 +72,18 @@ function App() {
           </Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
+          <Route
+            path='/share-request'
+            element={
+              <ProtectedRoute logged_in={logged_in}>
+                <ShareRequest
+                  pendingShared={pendingShared}
+                  config={config}
+                />
+              </ProtectedRoute>
+            }
+          >
+          </Route>
         </Routes>
       </Router>
     </div>

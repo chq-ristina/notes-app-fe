@@ -312,3 +312,27 @@ textarea {
   background-color: transparent;
   color:#57153a;
 }
+
+.share-request{
+  overflow-y: auto;
+  border: 3px solid blue;
+}
+.shared-request-main{
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid green; */
+  padding: 10px;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+
+.shared-request-note{
+  border-bottom: 3px solid #57153a;
+  padding: 10px;
+}
+.shared-request-buttons{
+  /* border: 3px solid green; */
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+}
