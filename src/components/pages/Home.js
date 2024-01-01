@@ -49,8 +49,8 @@ function Home({
   // console.log("token: ", token);
   // console.log("username: ", username)
 
-   console.log("active note:", activeNote);
-   console.log(typeof(activeNote));
+  //  console.log("active note:", activeNote);
+  //  console.log(typeof(activeNote));
 
   // console.log("updated title:", updatedTitle, "updated text:", updatedText);
 
@@ -62,9 +62,9 @@ function Home({
     openModal = true;
 
     closeModal.addEventListener("click", () => {
-      console.log("attempting to close modal....");
+      //console.log("attempting to close modal....");
       if(openSharedModal){
-        console.log("closing shared modal");
+        //console.log("closing shared modal");
         setOpenSharedModal(false);
       }
       modal[0].close()
@@ -169,11 +169,11 @@ function Home({
   }, [activeNote])
 
   useEffect(() => {
-    console.log("in use effect for opensharedmodal");
+    //console.log("in use effect for opensharedmodal");
     if(openSharedModal && activeNote !== false){
       const modal = document.getElementsByClassName('shared-modal')
       openDialog(modal)
-      console.log("going to get shared with")
+      //console.log("going to get shared with")
       getSharedWith(activeNote)
     }
   }, [openSharedModal])

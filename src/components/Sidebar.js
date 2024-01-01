@@ -63,7 +63,7 @@ function Sidebar({
                             <strong>{note.title}</strong>
                             <button onClick={() => onDeleteNote(note.id)}>Delete</button>
                         </div>
-                        <p>{note.text && note.text.substr(0, 100) + "..."}</p>
+                        <p>{note.text.length > 100 ? note.text.substr(0, 100) + "..." : note.text}</p>
                         <small className='note-meta'>
                             Last modified {new Date(note.dateUpdated).toLocaleDateString("en-US", {
                                 hour: "2-digit",

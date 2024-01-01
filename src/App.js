@@ -10,6 +10,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShareRequest from './components/pages/ShareRequest';
+import { jwtDecode } from "jwt-decode";
+import { removeUser } from './redux/features/User';
+import { removeUserToken } from './redux/features/UserToken';
 
 function App() {
   const logged_in = useSelector((state) => state.user.value.logged_in);
@@ -17,7 +20,21 @@ function App() {
   const token = useSelector((state) => state.userToken.value.userToken.userToken);
   const user_id = useSelector((state) => state.user.value.user_id);
   const [pendingShared, setPendngShared] = useState([]);
+  const [author, setAuthor] = useState("");
 
+  useEffect(() => {
+    if(token != null){
+      const decode = jwtDecode(token);
+      const expiredToken = Date.now > decode.exp;
+  
+      if(expiredToken){
+        // useDispatch(removeUser());
+        // useDispatch(removeUserToken());
+        localStorage.clear();
+      }
+    }
+  }, [])
+  
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
@@ -38,10 +55,43 @@ function App() {
     }
   }
 
+  const getUsernameById = async (user_id, note) => {
+    try{
+        axios.get(
+          `http://localhost:8080/api/v1/user/get-username?id=${user_id}`,
+          {
+            headers: config.headers
+          }
+        ).then(async (res) => {
+          console.log("get username results: ", res.data.username);
+          note.author = res.data.username;
+          setAuthor(res.data.username);
+          console.log(author);
+        })
+      } catch(e){
+        console.log(e);
+      }
+}
+
   useEffect(() => {
-    getPendingShared();
+    if(token != null){
+      getPendingShared();
+    }
+
+    console.log(pendingShared);
   }, [])
 
+  useEffect(() => {
+    const fetchNoteAuthor = async() => {
+      pendingShared.forEach(async (note) => {
+        await getUsernameById(note.user_id, note);
+        // note.author = author;
+        console.log("fetch author note: ", note);
+      })
+    }
+
+    fetchNoteAuthor();
+  }, [pendingShared])
 
   return (
     <div className="App">
