@@ -22,16 +22,63 @@ function App() {
   const [pendingShared, setPendngShared] = useState([]);
   const [author, setAuthor] = useState("");
 
+  // window.onload = function()
+  // {
+  //   if(token != null){
+  //     const decode = jwtDecode(token);
+  //     const expiredToken = Date.now > decode.exp;
+  
+  //     if(expiredToken){
+  //       // useDispatch(removeUser());
+  //       // useDispatch(removeUserToken());
+  //       window.localStorage.clear();
+  //     }
+  //   }
+  // }
+
+  let expiredToken = false;
+  if(token != null){
+    const decode = jwtDecode(token);
+    /*const*/ expiredToken = Date.now > decode.exp;
+
+    if(expiredToken){
+      console.log("EXPIRED TOKEN!!!!!!")
+      // useDispatch(removeUser());
+      // useDispatch(removeUserToken());
+      localStorage.clear();
+      //window.localStorage.clear();
+      // localStorage.removeItem('userToken');
+      // localStorage.removeItem('username');
+      // localStorage.removeItem('logged_in');
+      // localStorage.removeItem('user_id');
+      //useHandleExpiredToken();
+    }
+  }
+
+  const useHandleExpiredToken = () => {
+    useDispatch(removeUser());
+    useDispatch(removeUserToken());
+  }
   useEffect(() => {
     if(token != null){
       const decode = jwtDecode(token);
-      const expiredToken = Date.now > decode.exp;
-  
+      const today = new Date();
+      const expiredToken = today > decode.exp;
       if(expiredToken){
+        console.log("EXPIRED TOKEN!!!!!!")
         // useDispatch(removeUser());
         // useDispatch(removeUserToken());
         localStorage.clear();
+        //window.localStorage.clear();
+        // localStorage.removeItem('userToken');
+        // localStorage.removeItem('username');
+        // localStorage.removeItem('logged_in');
+        // localStorage.removeItem('user_id');
+        //useHandleExpiredToken();
       }
+      // else{
+      //   getPendingShared();
+      // }
     }
   }, [])
   
@@ -79,7 +126,7 @@ function App() {
     }
 
     console.log(pendingShared);
-  }, [])
+  }, [token])
 
   useEffect(() => {
     const fetchNoteAuthor = async() => {

@@ -157,7 +157,7 @@ function Home({
     if (activeTab === "My Notes"){
       getNotes();
     }
-    if (activeTab === "Shared with me"){
+    if (activeTab === "Shared with me") {
       getSharedNotes();
     }
   }, [activeTab, updateSideBar])
