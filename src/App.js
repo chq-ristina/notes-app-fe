@@ -35,35 +35,16 @@ function App() {
   //     }
   //   }
   // }
-
-  let expiredToken = false;
-  if(token != null){
-    const decode = jwtDecode(token);
-    /*const*/ expiredToken = Date.now > decode.exp;
-
-    if(expiredToken){
-      console.log("EXPIRED TOKEN!!!!!!")
-      // useDispatch(removeUser());
-      // useDispatch(removeUserToken());
-      localStorage.clear();
-      //window.localStorage.clear();
-      // localStorage.removeItem('userToken');
-      // localStorage.removeItem('username');
-      // localStorage.removeItem('logged_in');
-      // localStorage.removeItem('user_id');
-      //useHandleExpiredToken();
-    }
-  }
-
-  const useHandleExpiredToken = () => {
-    useDispatch(removeUser());
-    useDispatch(removeUserToken());
-  }
+  
   useEffect(() => {
     if(token != null){
       const decode = jwtDecode(token);
       const today = new Date();
-      const expiredToken = today > decode.exp;
+      const expiredToken = Date.now().valueOf > decode.exp.valueOf;
+      console.log("decode: ", decode);
+      console.log("today: ", Date.now());
+      console.log("expired?: ", Date.now().valueOf
+       > decode.exp.valueOf);
       if(expiredToken){
         console.log("EXPIRED TOKEN!!!!!!")
         // useDispatch(removeUser());
