@@ -20,15 +20,37 @@ function ShareRequest({
     //         console.log(e);
     //       }
     // }
+
+    console.log("Pending Shared in share request: ", pendingShared);
+
+    const onClick = async (id, accepted) => {
+        const acceptRequest = {
+            id: id,
+            accepted: accepted
+        }
+        try{
+            await axios.put(
+                'http://localhost:8080/api/v1/shared/accept',
+                acceptRequest,
+                config
+            ).then(res => {
+                console.log(res.data);
+            })
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
   return (
     <div className='share-request'>
         <h2>Pending share requests</h2>
         <div className='shared-request-main'>
             {pendingShared.length < 1 && <h3>There are no pending share requests</h3>}
-            {pendingShared.length > 0 && pendingShared.map((note) => 
-                (
+            {pendingShared.length > 0 && pendingShared.map(({shareId, note}) => 
+                (console.log(shareId, ": ", note),
                 <div className='shared-request-note'>
-                    <div className='shared-request-title' key={note.Id}>
+                    <div className='shared-request-title' key={shareId}>
                         <strong>{note.title}</strong>
                     </div>
                     <p>{note.text.length > 200 ? note.text.substr(0, 200) + "..." : note.text}</p>
@@ -41,7 +63,8 @@ function ShareRequest({
                                     border: "2px solid green",
                                     backgroundColor: "transparent",
                                     cursor: "pointer"
-                                }}>
+                                }}
+                                onClick={() => {onClick(shareId, true)}}>
                             accept
                         </button>
                         <button
@@ -51,7 +74,8 @@ function ShareRequest({
                                     border: "2px solid red",
                                     backgroundColor: "transparent",
                                     cursor: "pointer"
-                                }}>
+                                }}
+                                onClick={() => {onClick(shareId, false)}}>
                             reject
                         </button>
                     </div> 

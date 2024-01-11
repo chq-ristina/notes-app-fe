@@ -46,6 +46,8 @@ function ShareModal({
   const onShare = () => {
 
   }
+
+  console.log("Shared list: ", shared);
   return (
     <div className='share-modal'>
         <dialog /*open*/ id="modal" class="shared-modal modal">
@@ -60,11 +62,11 @@ function ShareModal({
             />
             {ableToShare && <p>Requested to share with {searchInput}</p>}
             {!ableToShare && <p style={{color:"red"}}>{shareError}</p>}
-            {shared.Length > 0 && <p>People you shared with</p>}
+            {shared.length > 0 && <p>People you shared with</p>}
             <div>
-              {shared.map((user, key) => {
+              {shared.map((user) => {
                 return(
-                  <p>{user.target_user}</p>
+                  <p>{user.targetUser}</p>
                 )
               })}
             </div>

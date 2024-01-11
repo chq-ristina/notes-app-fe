@@ -111,7 +111,7 @@ function App() {
 
   useEffect(() => {
     const fetchNoteAuthor = async() => {
-      pendingShared.forEach(async (note) => {
+      pendingShared.forEach(async ({shareId, note}) => {
         await getUsernameById(note.user_id, note);
         // note.author = author;
         console.log("fetch author note: ", note);
