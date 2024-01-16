@@ -13,7 +13,8 @@ function Home({
   pendingShared,
   setPendngShared,
   config,
-  getPendingShared
+  getPendingShared,
+  getUsernameById
 }) {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
@@ -82,7 +83,7 @@ function Home({
             { query: user_id }
         })
         .then(res => {
-          console.log("notes response:", res.data.not);
+          console.log("notes response:", res.data);
           setNotes(res.data);
         }
         );
@@ -110,24 +111,24 @@ function Home({
     }
   }
 
-  const getUsername = async (id) => {
-    try {
-      axios.get(
-        "http://localhost:8080/api/v1/user/get-username",
-        {
-          headers: config.headers,
-          params:
-            { id: id }
-        }
-      )
-        .then(res => {
-          setNoteUsername(res.data.username);
-          return res.data.username;
-        })
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  // const getUsername = async (id) => {
+  //   try {
+  //     axios.get(
+  //       "http://localhost:8080/api/v1/user/get-username",
+  //       {
+  //         headers: config.headers,
+  //         params:
+  //           { id: id }
+  //       }
+  //     )
+  //       .then(res => {
+  //         setNoteUsername(res.data.username);
+  //         return res.data.username;
+  //       })
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   const getSharedWith = async(id) => {
     console.log("Getting shared list!");
@@ -177,6 +178,25 @@ function Home({
       getSharedWith(activeNote)
     }
   }, [openSharedModal])
+
+  useEffect(() => {
+    const fetchNoteAuthor = async() => {
+      // console.log("notes length: ", notes.length);
+      notes.forEach(async note => {
+        // console.log("note: ", note);
+
+        await getUsernameById(note.user_id, note);
+        // note.author = author;
+        // console.log("fetch author note: ", note);
+      })
+    }
+    
+    if(notes.length > 0){
+      // console.log("fna: ", notes);
+      fetchNoteAuthor();
+    }
+    
+  }, [notes])
 
   // const config = {
   //   headers: { Authorization: `Bearer ${token}` }
@@ -305,7 +325,8 @@ function Home({
         setActiveNote={setActiveNote}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        getUsername={getUsername}
+        // getUsername={getUsername}
+        getUsernameById={getUsernameById}
         noteUsername={noteUsername}
       />
       <Main

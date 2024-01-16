@@ -11,31 +11,34 @@ function Sidebar({
     setActiveNote,
     activeTab,
     setActiveTab,
-    getUsername,
+    getUsernameById,
+    // getUsername,
     noteUsername }) {
 
     const username = useSelector((state) => state.user.value.username);
     const [name, setName] =  useState();
     let reversedNotes = [...notes].reverse();
 
-    // const getUsername = async (id) => {
-    //     try{
-    //       axios.get(
-    //         "http://localhost:8080/api/v1/user/get-username",
-    //         {
-    //           headers: config.headers,
-    //           params: 
-    //             { id: id}
-    //         }
-    //       )
-    //       .then(res => {
-    //         setName(res.data.username);
-    //       })
-    //     } catch(e){
-    //       console.log(e);
-    //     }
-    //   }
-
+    const getUsername = (id) => {
+        try{
+          axios.get(
+            "http://localhost:8080/api/v1/user/get-username",
+            {
+              headers: config.headers,
+              params: 
+                { id: id}
+            }
+          )
+          .then(res => {
+           console.log("Username: ", res.data.username);
+           return res.data.username;
+          })
+        } catch(e){
+          console.log(e);
+        }
+      }
+    
+    
     return (
         <div className='app-sidebar'>
             <div className='app-sidebar-header'>
@@ -57,6 +60,7 @@ function Sidebar({
             </div>
             <div className='app-sidebar-notes'>
                 {reversedNotes?.map((note) => (
+                    console.log("note: ", note),
                     <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} onClick={() => setActiveNote(note.id)}>
                         {/* {console.log("note", note)} */}
                         <div className='sidebar-note-title'>
@@ -72,7 +76,7 @@ function Sidebar({
                         </small>
                         <small className='note-meta'>
                             {/* {console.log("getusername:", getUsername(note.user_id), name)} */}
-                            By {username}
+                            By {note.author}
                         </small>
 
                     </div>

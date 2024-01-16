@@ -93,8 +93,8 @@ function App() {
         ).then(async (res) => {
           console.log("get username results: ", res.data.username);
           note.author = res.data.username;
-          setAuthor(res.data.username);
-          console.log(author);
+          // setAuthor(res.data.username);
+          // console.log(author);
         })
       } catch(e){
         console.log(e);
@@ -143,6 +143,7 @@ function App() {
                   setPendngShared={setPendngShared}
                   config={config}
                   getPendingShared={getPendingShared}
+                  getUsernameById={getUsernameById}
                 />
               </ProtectedRoute>
             }

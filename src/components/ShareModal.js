@@ -48,6 +48,8 @@ function ShareModal({
   }
 
   console.log("Shared list: ", shared);
+
+  shared = shared.filter(x => x.accepted == true);
   return (
     <div className='share-modal'>
         <dialog /*open*/ id="modal" class="shared-modal modal">
@@ -64,11 +66,18 @@ function ShareModal({
             {!ableToShare && <p style={{color:"red"}}>{shareError}</p>}
             {shared.length > 0 && <p>People you shared with</p>}
             <div>
-              {shared.map((user) => {
-                return(
+              {shared.map(user => {
+                console.log(user);
+                (
                   <p>{user.targetUser}</p>
                 )
               })}
+              {/* {shared.map((user) => 
+              {
+                return(
+                  <p>{user.targetUser}</p>
+                )
+              })} */}
             </div>
             <button onClick={onClick} id="closeModal" class="modal-close-btn">Close</button>
         </dialog>
