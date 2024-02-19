@@ -47,14 +47,14 @@ function ShareRequest({
         <h2>Pending share requests</h2>
         <div className='shared-request-main'>
             {pendingShared.length < 1 && <h3>There are no pending share requests</h3>}
-            {pendingShared.length > 0 && pendingShared.map(({shareId, note}) => 
+            {pendingShared.length > 0 && pendingShared.map(({shareId, note, noteAuthor}) => 
                 (console.log(shareId, ": ", note),
                 <div className='shared-request-note'>
                     <div className='shared-request-title' key={shareId}>
                         <strong>{note.title}</strong>
                     </div>
                     <p>{note.text.length > 200 ? note.text.substr(0, 200) + "..." : note.text}</p>
-                    <p>By {note.author}</p>
+                    <p>By {noteAuthor}</p>
                     <div className='shared-request-buttons'>
                         <button
                             style={

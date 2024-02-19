@@ -14,7 +14,7 @@ function Home({
   setPendngShared,
   config,
   getPendingShared,
-  getUsernameById
+  // getUsernameById
 }) {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(false);
@@ -32,7 +32,7 @@ function Home({
   //let openSharedModal = false;
 
   const getActiveNote = () => {
-    return notes.find((note) => note.id === activeNote);
+    return notes.find(({note}) => note?.id === activeNote);
   }
   const [updatedTitle, setUpdatedTitle] = useState(null);
   const [updatedText, setUpdatedText] = useState(null);
@@ -165,8 +165,9 @@ function Home({
 
   useEffect(() => {
     let note = getActiveNote();
-    setUpdatedTitle(note?.title)
-    setUpdatedText(note?.text)
+    console.log("active note: ", note);
+    setUpdatedTitle(note?.note?.title)
+    setUpdatedText(note?.note?.text)
   }, [activeNote])
 
   useEffect(() => {
@@ -179,24 +180,24 @@ function Home({
     }
   }, [openSharedModal])
 
-  useEffect(() => {
-    const fetchNoteAuthor = async() => {
-      // console.log("notes length: ", notes.length);
-      notes.forEach(async note => {
-        // console.log("note: ", note);
+  // useEffect(() => {
+  //   const fetchNoteAuthor = async() => {
+  //     // console.log("notes length: ", notes.length);
+  //     notes.forEach(async note => {
+  //       // console.log("note: ", note);
 
-        await getUsernameById(note.user_id, note);
-        // note.author = author;
-        // console.log("fetch author note: ", note);
-      })
-    }
+  //       await getUsernameById(note.user_id, note);
+  //       // note.author = author;
+  //       // console.log("fetch author note: ", note);
+  //     })
+  //   }
     
-    if(notes.length > 0){
-      // console.log("fna: ", notes);
-      fetchNoteAuthor();
-    }
+  //   if(notes.length > 0){
+  //     // console.log("fna: ", notes);
+  //     fetchNoteAuthor();
+  //   }
     
-  }, [notes])
+  // }, [notes])
 
   // const config = {
   //   headers: { Authorization: `Bearer ${token}` }
@@ -225,16 +226,19 @@ function Home({
   };
 
   const onUpdateNote = async (updatedNote) => {
-    const updatedNotesArray = notes.map(async (note) => {
+    console.log("update note: ", updatedNote);
+    const updatedNotesArray = notes.map(async ({note}) => {
       let same = updatedTitle === note.title && updatedText === note.text
       if (note.id === updatedNote.id && !same) {
         console.log("UPDATING!!!");
         const update = {
           id: updatedNote.id,
           updateTitle: updatedTitle,
-          updateText: updatedText
+          updateText: updatedText,
+          modifiedBy: username
         }
 
+        console.log("update object: ", update);
         try {
           await axios.put(
             "http://localhost:8080/api/v1/note/update",
@@ -252,7 +256,7 @@ function Home({
           console.log(e);
         }
       }
-      console.log("note in update:", note)
+      // console.log("note in update:", note)
       // return note;
     });
   };
@@ -326,7 +330,7 @@ function Home({
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         // getUsername={getUsername}
-        getUsernameById={getUsernameById}
+        // getUsernameById={getUsernameById}
         noteUsername={noteUsername}
       />
       <Main

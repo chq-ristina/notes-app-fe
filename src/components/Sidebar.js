@@ -11,7 +11,7 @@ function Sidebar({
     setActiveNote,
     activeTab,
     setActiveTab,
-    getUsernameById,
+    // getUsernameById,
     // getUsername,
     noteUsername }) {
 
@@ -59,24 +59,35 @@ function Sidebar({
                 <button onClick={onAddNote}>Add</button>
             </div>
             <div className='app-sidebar-notes'>
-                {reversedNotes?.map((note) => (
+                {reversedNotes?.map(({note, author}) => (
                     console.log("note: ", note),
-                    <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} onClick={() => setActiveNote(note.id)}>
+                    <div className={`app-sidebar-note ${note?.id === activeNote && "active"}`} onClick={() => setActiveNote(note?.id)}>
                         {/* {console.log("note", note)} */}
                         <div className='sidebar-note-title'>
-                            <strong>{note.title}</strong>
-                            <button onClick={() => onDeleteNote(note.id)}>Delete</button>
+                            <strong>{note?.title}</strong>
+                            <button onClick={() => onDeleteNote(note?.id)}>Delete</button>
                         </div>
-                        <p>{note.text.length > 100 ? note.text.substr(0, 100) + "..." : note.text}</p>
+                        <p>{note?.text.length > 100 ? note?.text.substr(0, 100) + "..." : note?.text}</p>
+                        {note?.dateCreated !== note?.dateUpdated && 
+                            <small className='note-meta'>
+                                Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                })} by {note?.modifiedBy}
+                            </small>
+                        }
+                        {note?.dateCreated === note?.dateUpdated && 
                         <small className='note-meta'>
-                            Last modified {new Date(note.dateUpdated).toLocaleDateString("en-US", {
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}
+                        Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        })}
                         </small>
+                        }
+                        
                         <small className='note-meta'>
                             {/* {console.log("getusername:", getUsername(note.user_id), name)} */}
-                            By {note.author}
+                            By {author}
                         </small>
 
                     </div>

@@ -26,12 +26,12 @@ function Main({
   const update = (e) => {
     e.preventDefault();
 
-    onUpdateNote(activeNote);
+    onUpdateNote(activeNote.note);
   }
 
   const onEditField = (key, value) => {
     onUpdateNote({
-      ...activeNote,
+      ...activeNote.note,
       [key]: value
     }, key);
   };

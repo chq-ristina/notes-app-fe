@@ -83,23 +83,23 @@ function App() {
     }
   }
 
-  const getUsernameById = async (user_id, note) => {
-    try{
-        axios.get(
-          `http://localhost:8080/api/v1/user/get-username?id=${user_id}`,
-          {
-            headers: config.headers
-          }
-        ).then(async (res) => {
-          console.log("get username results: ", res.data.username);
-          note.author = res.data.username;
-          // setAuthor(res.data.username);
-          // console.log(author);
-        })
-      } catch(e){
-        console.log(e);
-      }
-}
+//   const getUsernameById = async (user_id, note) => {
+//     try{
+//         axios.get(
+//           `http://localhost:8080/api/v1/user/get-username?id=${user_id}`,
+//           {
+//             headers: config.headers
+//           }
+//         ).then(async (res) => {
+//           console.log("get username results: ", res.data.username);
+//           note.author = res.data.username;
+//           // setAuthor(res.data.username);
+//           // console.log(author);
+//         })
+//       } catch(e){
+//         console.log(e);
+//       }
+// }
 
   useEffect(() => {
     if(token != null){
@@ -109,17 +109,17 @@ function App() {
     console.log(pendingShared);
   }, [token])
 
-  useEffect(() => {
-    const fetchNoteAuthor = async() => {
-      pendingShared.forEach(async ({shareId, note}) => {
-        await getUsernameById(note.user_id, note);
-        // note.author = author;
-        console.log("fetch author note: ", note);
-      })
-    }
+  // useEffect(() => {
+  //   const fetchNoteAuthor = async() => {
+  //     pendingShared.forEach(async ({shareId, note}) => {
+  //       await getUsernameById(note.user_id, note);
+  //       // note.author = author;
+  //       console.log("fetch author note: ", note);
+  //     })
+  //   }
 
-    fetchNoteAuthor();
-  }, [pendingShared])
+  //   fetchNoteAuthor();
+  // }, [pendingShared])
 
   return (
     <div className="App">
@@ -143,7 +143,7 @@ function App() {
                   setPendngShared={setPendngShared}
                   config={config}
                   getPendingShared={getPendingShared}
-                  getUsernameById={getUsernameById}
+                  // getUsernameById={getUsernameById}
                 />
               </ProtectedRoute>
             }
