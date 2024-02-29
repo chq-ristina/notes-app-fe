@@ -60,7 +60,7 @@ function Sidebar({
             </div>
             <div className='app-sidebar-notes'>
                 {reversedNotes?.map(({note, author}) => (
-                    console.log("note: ", note),
+                    // console.log("note: ", note),
                     <div className={`app-sidebar-note ${note?.id === activeNote && "active"}`} onClick={() => setActiveNote(note?.id)}>
                         {/* {console.log("note", note)} */}
                         <div className='sidebar-note-title'>

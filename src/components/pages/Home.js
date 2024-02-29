@@ -142,8 +142,10 @@ function Home({
         }
       )
         .then(res => {
-          console.log("sharedWith results: ", res.data);
-          setShared(res.data);
+          var data = res.data;
+          console.log("shared by note id results: ", data);
+          setShared(data);
+          console.log("shared by note id 2: ", shared);
         })
     } catch (e){
       console.log(e);
