@@ -21,6 +21,10 @@ function SearchBar({
               onChange={(e) => setSearchInput(e.target.value)}
               value={searchInput} 
             />
+          {/* <label class="checkbox-container">read only
+            <input type="checkbox"/>
+            <span class="checkmark"></span>
+          </label> */}
             <button onClick={onShare}>
                 <AddRoundedIcon/>
             </button>

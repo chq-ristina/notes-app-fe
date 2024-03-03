@@ -1,19 +1,5 @@
 import React, { useState } from 'react'
 import SearchBar from './SearchBar'
-/*
-TODO:
-Need to make the plus button actually add the people to share
-
-IDEALLY:
-Want user to enter another user's username
-(Check to make sure the username isn't the same as the current user and that the username entered exists)
-If there is an error... show error message underneath the searchbar
-Once a user is added, they will show up underneath the search bar
-
-Maybe in the backend side, be able to track who the note is shared with (might already have that) and show that on 
-the front end side, so when a user clicks on this, they can see who they've shared this note with
-Also show if someone has accepted the share request (maybe through color of their username)
-*/
 
 function ShareModal({
   activeNote,

@@ -59,7 +59,7 @@ function Main({
               <button id="closeModal" class="modal-close-btn">Close</button>
             </dialog>
             <ShareModal
-              activeNote={activeNote}
+              activeNote={activeNote.note}
               shared={shared}
               setShared={setShared}
               openSharedModal={openSharedModal}

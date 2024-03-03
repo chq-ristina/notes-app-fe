@@ -65,7 +65,7 @@ function Sidebar({
                         {/* {console.log("note", note)} */}
                         <div className='sidebar-note-title'>
                             <strong>{note?.title}</strong>
-                            <button onClick={() => onDeleteNote(note?.id)}>Delete</button>
+                            {activeTab == "My Notes" && <button onClick={() => onDeleteNote(note?.id)}>Delete</button>}
                         </div>
                         <p>{note?.text.length > 100 ? note?.text.substr(0, 100) + "..." : note?.text}</p>
                         {note?.dateCreated !== note?.dateUpdated && 
