@@ -15,9 +15,13 @@ import { removeUser, setUser } from '../redux/features/User';
 import { removeUserToken } from '../redux/features/UserToken';
 import HomeIcon from '@mui/icons-material/Home';
 
-export default function Appbar() {
-  const logged_in = useSelector((state) => state.user.value.logged_in);
-  const username = useSelector((state) => state.user.value.username);
+export default function Appbar({
+  logged_in,
+  username,
+  pendingShared
+}) {
+  // const logged_in = useSelector((state) => state.user.value.logged_in);
+  // const username = useSelector((state) => state.user.value.username);
 
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -67,16 +71,20 @@ export default function Appbar() {
               </Link>
             }
             {logged_in &&
-              <IconButton
-                size="large"
-                aria-label="show new notifications"
-                color="inherit"
+              <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/share-request'
               >
-                <Badge badgeContent={1} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-
+                <IconButton
+                  size="large"
+                  aria-label="show new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={pendingShared.length} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
             }
 
             {logged_in &&

@@ -11,31 +11,34 @@ function Sidebar({
     setActiveNote,
     activeTab,
     setActiveTab,
-    getUsername,
+    // getUsernameById,
+    // getUsername,
     noteUsername }) {
 
     const username = useSelector((state) => state.user.value.username);
     const [name, setName] =  useState();
     let reversedNotes = [...notes].reverse();
 
-    // const getUsername = async (id) => {
-    //     try{
-    //       axios.get(
-    //         "http://localhost:8080/api/v1/user/get-username",
-    //         {
-    //           headers: config.headers,
-    //           params: 
-    //             { id: id}
-    //         }
-    //       )
-    //       .then(res => {
-    //         setName(res.data.username);
-    //       })
-    //     } catch(e){
-    //       console.log(e);
-    //     }
-    //   }
-
+    const getUsername = (id) => {
+        try{
+          axios.get(
+            "http://localhost:8080/api/v1/user/get-username",
+            {
+              headers: config.headers,
+              params: 
+                { id: id}
+            }
+          )
+          .then(res => {
+           console.log("Username: ", res.data.username);
+           return res.data.username;
+          })
+        } catch(e){
+          console.log(e);
+        }
+      }
+    
+    
     return (
         <div className='app-sidebar'>
             <div className='app-sidebar-header'>
@@ -56,23 +59,35 @@ function Sidebar({
                 <button onClick={onAddNote}>Add</button>
             </div>
             <div className='app-sidebar-notes'>
-                {reversedNotes?.map((note) => (
-                    <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} onClick={() => setActiveNote(note.id)}>
+                {reversedNotes?.map(({note, author}) => (
+                    // console.log("note: ", note),
+                    <div className={`app-sidebar-note ${note?.id === activeNote && "active"}`} onClick={() => setActiveNote(note?.id)}>
                         {/* {console.log("note", note)} */}
                         <div className='sidebar-note-title'>
-                            <strong>{note.title}</strong>
-                            <button onClick={() => onDeleteNote(note.id)}>Delete</button>
+                            <strong>{note?.title}</strong>
+                            {activeTab == "My Notes" && <button onClick={() => onDeleteNote(note?.id)}>Delete</button>}
                         </div>
-                        <p>{note.text && note.text.substr(0, 100) + "..."}</p>
+                        <p>{note?.text.length > 100 ? note?.text.substr(0, 100) + "..." : note?.text}</p>
+                        {note?.dateCreated !== note?.dateUpdated && 
+                            <small className='note-meta'>
+                                Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                })} by {note?.modifiedBy}
+                            </small>
+                        }
+                        {note?.dateCreated === note?.dateUpdated && 
                         <small className='note-meta'>
-                            Last modified {new Date(note.dateUpdated).toLocaleDateString("en-US", {
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}
+                        Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        })}
                         </small>
+                        }
+                        
                         <small className='note-meta'>
                             {/* {console.log("getusername:", getUsername(note.user_id), name)} */}
-                            By {username}
+                            By {author}
                         </small>
 
                     </div>
