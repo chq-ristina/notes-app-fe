@@ -101,6 +101,7 @@ body,
 .app-sidebar-notes {
   height: calc(100vh - 200px);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .app-sidebar-note {
@@ -314,7 +315,7 @@ textarea {
   color:#57153a;
 }
 
-/* .checkbox-container {
+.checkbox-container {
   display: block;
   position: relative;
   border: 2px solid black;
@@ -380,7 +381,7 @@ textarea {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-} */
+} 
 
 .share-request{
   overflow-y: auto;

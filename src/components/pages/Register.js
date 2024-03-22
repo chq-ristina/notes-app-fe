@@ -19,6 +19,8 @@ function Register() {
   const [err, setErr] = useState(false);
   const [empty, setEmpty] = useState(false);
 
+  const[errorMessage, setErrorMessage] = useState('');
+
   async function submit(e) {
     e.preventDefault();
 
@@ -48,6 +50,12 @@ function Register() {
       setErr(true);
       if(empty) setEmpty(false);
       console.log(e);
+      if(e?.response){
+        var data = e.response.data;
+        setErrorMessage(data.errorMessage);
+      }else{
+        setErrorMessage('Something went wrong');
+      }
     }
   }
 
@@ -62,7 +70,7 @@ function Register() {
                 <input required type='email' onChange={(e) => setEmail(e.target.value)} placeholder='email'></input>
                 <input required type='password' onChange={(e) => setPassword(e.target.value)} placeholder='password'></input>
                 <button onClick={submit}>Sign Up</button>
-                {err && <span className='error'>Something went wrong</span>}
+                {err && <span className='error'>{errorMessage}</span>}
                 {empty && <span className='error'>You must fill in all fields</span>}
                 {/*{exists && <span className='error'>Account already exist</span>} */}
             </form>

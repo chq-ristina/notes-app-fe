@@ -5,6 +5,7 @@ import ShareModal from './ShareModal';
 
 function Main({
   activeNote, 
+  activeTab,
   onUpdateNote, 
   updatedTitle, 
   setUpdatedTitle, 
@@ -83,9 +84,11 @@ function Main({
               <button onClick={update}>
                 Save
               </button>
+              {activeTab === "My Notes" && 
               <button className='share-button' onClick={onShareClick}>
                 <PersonAddAltRoundedIcon/>
               </button>
+              }
             </div>
         </div>
         {/* <div className='app-main-note-preview'>

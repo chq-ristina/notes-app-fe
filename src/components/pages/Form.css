@@ -2,10 +2,11 @@
 box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
 .form-container{
     /* border: 2px solid black; */
-    height: 100vh;
+    height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 .form-wrapper{
@@ -15,15 +16,17 @@ box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
+    width: 30vw;
 }
 
 .form-wrapper form{
     display: flex;
     flex-direction: column;
-    gap:15px;
+    gap:10px;
     text-align: center;
+    align-items: center;
 }
 
 .form-wrapper input{
@@ -53,9 +56,9 @@ box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
 
 .form-wrapper .error{
     color: red;
-    font-size: 3vh;
+    font-size: 2.5vh;
 }
 
 .title{
-    font-size: 5vh;
+    font-size: 4vh;
 }

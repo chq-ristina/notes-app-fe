@@ -337,6 +337,7 @@ function Home({
       />
       <Main
         activeNote={getActiveNote()}
+        activeTab={activeTab}
         onUpdateNote={onUpdateNote}
         updatedTitle={updatedTitle}
         setUpdatedTitle={setUpdatedTitle}
