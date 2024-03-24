@@ -39,7 +39,7 @@ function Register() {
     }
 
     try{
-      await axios.post("http://localhost:8080/api/v1/auth/register", user)
+      await axios.post(Constants.baseUrl + 'auth/registe', user)
       .then(res => {
         console.log("res: ", res.data);
         dispatch(setUserToken({userToken: res.data.token}));

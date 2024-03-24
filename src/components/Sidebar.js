@@ -22,7 +22,7 @@ function Sidebar({
     const getUsername = (id) => {
         try{
           axios.get(
-            "http://localhost:8080/api/v1/user/get-username",
+            Constants.baseUrl + 'user/get-username',
             {
               headers: config.headers,
               params: 

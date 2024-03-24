@@ -30,7 +30,7 @@ function ShareRequest({
         }
         try{
             await axios.put(
-                'http://localhost:8080/api/v1/shared/accept',
+                Constants.baseUrl + 'shared/accept',
                 acceptRequest,
                 config
             ).then(res => {

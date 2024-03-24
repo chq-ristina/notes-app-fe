@@ -70,7 +70,7 @@ function App() {
   const getPendingShared = async() => {
     try{
       axios.get(
-        `http://localhost:8080/api/v1/shared/get-pending?query=${user_id}`,
+        Constants.baseUrl + 'shared/get-pending?query=${user_id}',
         {
           headers: config.headers
         }

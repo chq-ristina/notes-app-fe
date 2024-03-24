@@ -76,7 +76,7 @@ function Home({
   const getNotes = async () => {
     try {
       axios.get(
-        "http://localhost:8080/api/v1/note/find-note/user-id",
+        Constants.baseUrl + 'note/find-note/user-id',
         {
           headers: config.headers,
           params:
@@ -95,7 +95,7 @@ function Home({
   const getSharedNotes = async () => {
     try {
       axios.get(
-        "http://localhost:8080/api/v1/shared/get-shared",
+        Constants.baseUrl + 'shared/get-shared',
         {
           headers: config.headers,
           params:
@@ -134,7 +134,7 @@ function Home({
     console.log("Getting shared list!");
     try{
       axios.get(
-        "http://localhost:8080/api/v1/shared/get-shared-by-note-id",
+        Constants.baseUrl + 'shared/get-shared-by-note-id',
         {
           headers: config.headers,
           params: 
@@ -214,7 +214,7 @@ function Home({
 
     try {
       await axios.post(
-        "http://localhost:8080/api/v1/note/add",
+        Constants.baseUrl + 'note/add',
         newNote,
         config)
         .then(res => {
@@ -243,7 +243,7 @@ function Home({
         console.log("update object: ", update);
         try {
           await axios.put(
-            "http://localhost:8080/api/v1/note/update",
+            Constants.baseUrl + 'note/update',
             update,
             config
           ).then(res => {
@@ -272,7 +272,7 @@ function Home({
 
     try{
       await axios.post(
-        "http://localhost:8080/api/v1/shared/add",
+        Constants.baseUrl + 'shared/add',
         sharedRequest,
         config
       ).then( res => {
@@ -304,7 +304,7 @@ function Home({
 
     try {
       await axios.delete(
-        "http://localhost:8080/api/v1/note/delete",
+        Constants + 'note/delete',
         {
           headers: config.headers,
           data: noteToDelete

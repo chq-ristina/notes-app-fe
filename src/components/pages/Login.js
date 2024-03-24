@@ -33,7 +33,7 @@ function Login() {
         console.log("user:", user);
 
         try{
-            await axios.post("http://localhost:8080/api/v1/auth/authenticate", user)
+            await axios.post(Constants.baseUrl + 'auth/authenticate', user)
             .then(res => {
                 console.log("response:", res.data);
                 dispatch(setUserToken({userToken: res.data.token}));
