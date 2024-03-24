@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShareRequest from './components/pages/ShareRequest';
 import { jwtDecode } from "jwt-decode";
+import BASE_URL from './helpers/baseUrl';
 import { removeUser } from './redux/features/User';
 import { removeUserToken } from './redux/features/UserToken';
 
@@ -70,7 +71,7 @@ function App() {
   const getPendingShared = async() => {
     try{
       axios.get(
-        Constants.baseUrl + 'shared/get-pending?query=${user_id}',
+        BASE_URL + `shared/get-pending?query=${user_id}`,
         {
           headers: config.headers
         }

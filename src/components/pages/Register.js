@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserToken } from '../../redux/features/UserToken';
 import { setUser } from '../../redux/features/User';
+import BASE_URL from '../../helpers/baseUrl';
 
 function Register() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Register() {
     }
 
     try{
-      await axios.post(Constants.baseUrl + 'auth/registe', user)
+      await axios.post(BASE_URL + `auth/register`, user)
       .then(res => {
         console.log("res: ", res.data);
         dispatch(setUserToken({userToken: res.data.token}));
@@ -50,7 +51,7 @@ function Register() {
       setErr(true);
       if(empty) setEmpty(false);
       console.log(e);
-      if(e?.response){
+      if(e?.response?.data !== ""){
         var data = e.response.data;
         setErrorMessage(data.errorMessage);
       }else{

@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+import BASE_URL from '../../helpers/baseUrl';
 
 function ShareRequest({
     pendingShared,
@@ -30,7 +31,7 @@ function ShareRequest({
         }
         try{
             await axios.put(
-                Constants.baseUrl + 'shared/accept',
+                BASE_URL + `shared/accept`,
                 acceptRequest,
                 config
             ).then(res => {

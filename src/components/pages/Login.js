@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserToken } from '../../redux/features/UserToken';
 import { setUser } from '../../redux/features/User';
+import BASE_URL from '../../helpers/baseUrl';
 
 function Login() {
     const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function Login() {
         console.log("user:", user);
 
         try{
-            await axios.post(Constants.baseUrl + 'auth/authenticate', user)
+            await axios.post(BASE_URL + `auth/authenticate`, user)
             .then(res => {
                 console.log("response:", res.data);
                 dispatch(setUserToken({userToken: res.data.token}));

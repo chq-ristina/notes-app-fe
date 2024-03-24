@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
+import BASE_URL from '../helpers/baseUrl';
 
 function Sidebar({
     config,
@@ -22,7 +23,7 @@ function Sidebar({
     const getUsername = (id) => {
         try{
           axios.get(
-            Constants.baseUrl + 'user/get-username',
+            BASE_URL + `user/get-username`,
             {
               headers: config.headers,
               params: 
