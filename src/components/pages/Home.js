@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
+import BASE_URL from '../../helpers/baseUrl';
 
 function Home({
   username,
@@ -76,7 +77,7 @@ function Home({
   const getNotes = async () => {
     try {
       axios.get(
-        "http://localhost:8080/api/v1/note/find-note/user-id",
+        BASE_URL + `note/find-note/user-id`,
         {
           headers: config.headers,
           params:
@@ -95,7 +96,7 @@ function Home({
   const getSharedNotes = async () => {
     try {
       axios.get(
-        "http://localhost:8080/api/v1/shared/get-shared",
+        BASE_URL + `shared/get-shared`,
         {
           headers: config.headers,
           params:
@@ -134,7 +135,7 @@ function Home({
     console.log("Getting shared list!");
     try{
       axios.get(
-        "http://localhost:8080/api/v1/shared/get-shared-by-note-id",
+        BASE_URL + `shared/get-shared-by-note-id`,
         {
           headers: config.headers,
           params: 
@@ -214,7 +215,7 @@ function Home({
 
     try {
       await axios.post(
-        "http://localhost:8080/api/v1/note/add",
+        BASE_URL + `note/add`,
         newNote,
         config)
         .then(res => {
@@ -243,7 +244,7 @@ function Home({
         console.log("update object: ", update);
         try {
           await axios.put(
-            "http://localhost:8080/api/v1/note/update",
+            BASE_URL + `note/update`,
             update,
             config
           ).then(res => {
@@ -272,7 +273,7 @@ function Home({
 
     try{
       await axios.post(
-        "http://localhost:8080/api/v1/shared/add",
+        BASE_URL + `shared/add`,
         sharedRequest,
         config
       ).then( res => {
@@ -304,7 +305,7 @@ function Home({
 
     try {
       await axios.delete(
-        "http://localhost:8080/api/v1/note/delete",
+        BASE_URL + `note/delete`,
         {
           headers: config.headers,
           data: noteToDelete
