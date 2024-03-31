@@ -28,7 +28,7 @@ function App() {
   //   if(token != null){
   //     const decode = jwtDecode(token);
   //     const expiredToken = Date.now > decode.exp;
-  
+
   //     if(expiredToken){
   //       // useDispatch(removeUser());
   //       // useDispatch(removeUserToken());
@@ -36,34 +36,24 @@ function App() {
   //     }
   //   }
   // }
-  
+
   useEffect(() => {
     if(token != null){
-      const decode = jwtDecode(token);
-      const today = new Date();
-      const expiredToken = Date.now().valueOf > decode.exp.valueOf;
+      let decode = jwtDecode(token);
+      let today = Math.round((new Date()).getTime() / 1000)
+      let expiredToken = today > decode.exp;
+
       console.log("decode: ", decode);
-      console.log("today: ", Date.now());
-      console.log("expired?: ", Date.now().valueOf
-       > decode.exp.valueOf);
+      // console.log("today: ", today);
+      // console.log("exp: ", decode.exp )
+      // console.log("expired?: ", expiredToken);
       if(expiredToken){
         console.log("EXPIRED TOKEN!!!!!!")
-        // useDispatch(removeUser());
-        // useDispatch(removeUserToken());
         localStorage.clear();
-        //window.localStorage.clear();
-        // localStorage.removeItem('userToken');
-        // localStorage.removeItem('username');
-        // localStorage.removeItem('logged_in');
-        // localStorage.removeItem('user_id');
-        //useHandleExpiredToken();
       }
-      // else{
-      //   getPendingShared();
-      // }
     }
   }, [])
-  
+
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
@@ -125,15 +115,15 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar 
+        <Navbar
           logged_in={logged_in}
           username={username}
           pendingShared={pendingShared}
         />
         <Routes>
           <Route path='/' element={<Landing/>}></Route>
-          <Route 
-            path='/home' 
+          <Route
+            path='/home'
             element={
               <ProtectedRoute logged_in={logged_in}>
                 <Home
@@ -148,7 +138,7 @@ function App() {
                 />
               </ProtectedRoute>
             }
-          >  
+          >
           </Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
