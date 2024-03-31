@@ -69,7 +69,7 @@ function Sidebar({
                             {activeTab === "My Notes" && <button onClick={() => onDeleteNote(note?.id)}>Delete</button>}
                         </div>
                         <p>{note?.text.length > 100 ? note?.text.substr(0, 100) + "..." : note?.text}</p>
-                        {note?.dateCreated !== note?.dateUpdated && 
+                        {note?.modifiedBy !== null && 
                             <small className='note-meta'>
                                 Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
                                     hour: "2-digit",
@@ -77,7 +77,7 @@ function Sidebar({
                                 })} by {note?.modifiedBy}
                             </small>
                         }
-                        {note?.dateCreated === note?.dateUpdated && 
+                        {note?.modifiedBy === null && 
                         <small className='note-meta'>
                         Last modified {new Date(note?.dateUpdated).toLocaleDateString("en-US", {
                             hour: "2-digit",
